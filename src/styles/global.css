@@ -1,0 +1,130 @@
+@import "./global/fonts.css";
+
+:root {
+	--pink-a: #ff9ff3;
+	--pink-b: #f368e0;
+	--yellow-a: #feca57;
+	--yellow-b: #ff9f43;
+	--red-a: #ff6b6b;
+	--red-b: #ee5253;
+	--light-blue-a: #48dbfb;
+	--light-blue-b: #0abde3;
+	--green-a: #1dd1a1;
+	--green-b: #10ac84;
+	--cyan-a: #00d2d3;
+	--cyan-b: #01a3a4;
+	--blue-a: #54a0ff;
+	--blue-b: #2e86de;
+	--purple-a: #5f27cd;
+	--purple-b: #341f97;
+	--grey-a: #c8d6e5;
+	--grey-b: #8395a7;
+	--dark-grey-a: hsl(211, 14%, 40%);
+	--dark-grey-b: hsl(212, 29%, 19%);
+	--dark-grey-c: hsl(212, 29%, 15%);
+	--dark-grey-ca: hsl(212, 27%, 12%);
+	--dark-grey-d: hsl(212, 14%, 10%);
+	--dark-grey-e: hsl(212, 12%, 8%);
+
+	--foreground-color-a: #fff;
+	--foreground-color-b: var(--grey-a);
+	--foreground-color-c: var(--grey-b);
+
+	--background-color-a: var(--dark-grey-b);
+	--background-color-b: var(--dark-grey-c);
+	--background-color-ba: var(--dark-grey-ca);
+	--background-color-c: var(--dark-grey-d);
+	--background-color-d: var(--dark-grey-e);
+
+	--background-color-a-hsl: 212, 29%, 19%;
+
+	--scrollbar-color: hsla(211, 29%, 40%, 25%);
+
+	--window-shadow-size: 0.3rem;
+	--window-shadow-opacity: 35%;
+	--window-shadow-spread: 3;
+	--window-box-shadow: calc(var(--window-shadow-size) * -1) var(--window-shadow-size)
+		calc(var(--window-shadow-size) * var(--window-shadow-spread)) 0px
+		rgba(0, 0, 0, var(--window-shadow-opacity));
+}
+
+html, body, #root {
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+html {
+	overflow: hidden;
+	background-color: var(--background-color-c);
+	font-size: 16px;
+}
+
+body {
+	margin: 0;
+	font-family: var(--body-font-family);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	color: var(--foreground-color-a);
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
+}
+
+p, a, button, input, h1, h2, h3, h4, h5, h6 {
+	font-family: var(--body-font-family);
+	letter-spacing: 0.01em;
+}
+
+p, a, div, span { font-size: 1em; }
+button, input { font-size: 0.875em; }
+h1 { font-size: 2em; }
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1.4em; }
+h5 { font-size: 1.2em; }
+h6 { font-size: 1em; }
+
+button, li[data-rttab="true"] {
+	margin: 0;
+	border: none;
+	outline: none;
+	transition: background-color 100ms ease-in-out;
+	cursor: pointer;
+	user-select: none;
+}
+
+code {
+	font-family: var(--mono-font-family);
+}
+
+
+*::selection {
+	color: var(--background-color-c);
+	background-color: var(--grey-b);
+}
+
+*::-webkit-scrollbar {
+	width: 1.25rem;
+	height: 1.25rem;
+}
+
+*::-webkit-scrollbar-track {
+	background: none;
+}
+
+*::-webkit-scrollbar-thumb {
+	border-radius: 9999px;
+	border: 5px solid transparent;
+	background-color: var(--scrollbar-color);
+	background-clip: padding-box;
+	backdrop-filter: invert(100%);
+	transition: 200ms ease-in-out;
+	z-index: 1;
+}
+
+*::-webkit-scrollbar-corner {
+	background-color: transparent;
+}
