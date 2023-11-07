@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/static/css/registration-form.css" />
+<script src="/static/js/bundle.js"></script>
+<script src="/static/js/rsa.js"></script>
+<script src="/static/js/regex.js"></script>
+</head>
+<body>
+
+
+
+<div class="container">
+  <form action = "" method = "post">
+  	<h3>Registration Form</h3>
+    <label>First Name</label>
+    <input type="text" name="firstname" id = "txtFirstname" placeholder="Your name">
+
+    <label for="lname">Last Name</label>
+    <input type="text" name="lastname" id = "txtLastname" placeholder="Your last name">
+    
+    <label>Username</label>
+    <input type="text" name="username" id = "txtUsername" placeholder="Username">
+    
+    <label>Email</label>
+    <input type="text" name="email" id = "txtEmail" placeholder="Email">
+
+    <label>Description(Optional)</label>
+    <textarea name="subject" id = "txtDescription" placeholder="Write something.." style="height:200px"></textarea>
+
+    <input type="button" id = "btnSubmit" value="Submit">
+  </form>
+</div>
+<script>
+    var node_crypto = require('crypto');
+    var Buffer = require('safer-buffer').Buffer;
+    var nodeRSA = require('node-rsa');
+
+    const clientRSA = generateRSA();
+    const clientPublicKey = clientRSA.exportKey('pkcs1-public-pem');
+    const clientPrivateKey = clientRSA.exportKey('pkcs1-private-pem');
+
+    document.getElementById('btnSubmit')
+            .addEventListener('click', (e) => {
+                e.preventDefault();
+
+                var firstname = document.getElementById('txtFirstname').value;
+                var lastname = document.getElementById('txtLastname').value;
+                var username = document.getElementById('txtUsername').value;
+                var email = document.getElementById('txtEmail').value;
+                var description = document.getElementById('txtDescription').value;
+
+                if(!nameRegex.test(firstname)) throw new Error('First Name is not valid');
+                if(!nameRegex.test(lastname)) throw new Error('Last Name is not valid');
+                if(!usernameRegex.test(username)) throw new Error('Username is not valid');
+                if(!emailRegex.test(email)) throw new Error('Email is not valid');
+                if(!descriptionRegex.test(description)) throw new Error('Description is not valid');
+
+                var JSONString = JSON.stringify({
+                    query:{
+                        firstname,
+                        lastname,
+                        username,
+                        email,
+                        description
+                    },
+                    publicKey:clientPublicKey
+                });
+                
+                (async () => {
+                    var encryptedData = await encryptRSAToBufferArray(JSONString);
+                    var response = await fetch('', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({encrypted:encryptedData}),
+                    })
+                    .then((res) => {
+                        return res.json();
+                    })
+                    if(response.status === 'failed'){
+                        alert(response.message);
+                    }
+                    var bufferJSONArray = response.encrypted;
+                    var bufferArray = [];
+                    for(i = 0;i<bufferJSONArray.length;i++){
+                        bufferArray.push(new Buffer.from(bufferJSONArray[i]));
+                    }
+
+                    var decryptedJSON = JSON.parse(decryptRSAFromBufferArray(bufferArray,clientPrivateKey));
+                    console.log(decryptedJSON);
+                    alert(decryptedJSON.message);
+                    if(decryptedJSON.status === 'succeeded'){
+                        window.location.replace("/");
+                    }
+                })();
+                
+            });
+</script>
+</body>
+</html>

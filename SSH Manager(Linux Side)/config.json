@@ -1,0 +1,4 @@
+{
+	"changePasswordExpiration":600000,
+	"sessionKeyLength":512
+}

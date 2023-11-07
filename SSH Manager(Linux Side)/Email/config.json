@@ -1,0 +1,10 @@
+//Go to Google Account setting. Make sure you’re logged in to your Gmail account
+// Under How you sign in to Google, select 2-Step Verification
+// You’ll be prompted to sign in to your email again
+// Scroll down to App passwords and click the arrow, >
+// In the Select app dropdown, select your app or enter a custom name, then do the same for the Select device dropdown
+// Click Generate, and a modal will pop up with your 16-digit app password. Copy it to somewhere secure
+{
+	"user":"your-email",
+	"password":"generated-digits"
+}

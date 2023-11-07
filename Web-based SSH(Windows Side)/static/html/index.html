@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <title>SSH Terminal</title>
+    <link rel="stylesheet" href="/css/xterm.css" />
+    <script src="/lib/xterm.js"></script>
+    <script src="/lib/xterm-addon-fit.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/static/js/bundle.js"></script>
+    <script src="/static/js/rsa.js"></script>
+    <script>
+      window.addEventListener('load', function() {
+        var modal = document.getElementById('login-modal');
+        modal.style.display = "block";
+        var login_button = document.getElementById('login-button');
+        var txtUsername = document.getElementById('username');
+        var txtPassword = document.getElementById('password');
+
+        var terminalContainer = document.getElementById('terminal-container');
+        var term;
+        term = new Terminal({ cursorBlink: true });
+        term.open(terminalContainer);
+        
+        var socket;
+
+        // Browser -> Backend
+        term.onData(function(data) {
+          socket.emit('data', data);
+        });
+        login_button.onclick = () => {
+
+          // socket = io.connect({
+          // "query": {
+          //     "username": txtUsername.value,
+          //     "password": txtPassword.value
+          // }
+          // });
+          (async () => {
+
+              var encryptedData = await encryptRSAToBufferArray(JSON.stringify({
+                    "username": txtUsername.value,
+                    "password": txtPassword.value
+                }));
+              socket = io.connect({
+                "query":{encrypted:JSON.stringify(encryptedData)}
+              });
+
+              socket.on('connect', function() {
+                term.write('\r\n*** Connected to backend***\r\n');
+                // Backend -> Browser
+                socket.on('data', function(data) {
+                  term.write(data);
+                });
+
+                socket.on('disconnect', function() {
+                  term.write('\r\n*** Disconnected from backend***\r\n');
+                  modal.style.display = 'block';
+                  socket.destroy();
+                });
+              });
+              modal.style.display = 'none';
+              window.onbeforeunload = () => {
+                  socket.close();
+              };
+
+          })();
+          
+        }
+              }, false);
+    </script>
+    <link rel = "stylesheet" href = "/static/css/terminal.css">
+    <link rel = "stylesheet" href = "/static/css/login-form.css">
+  </head>
+  <body>
+    <div id="login-modal" class="modal">
+  
+      <form class="modal-content animate">
+        <!-- <div class="imgcontainer">
+          <span onclick="document.getElementById('login-modal').style.display='none'" class="close" title="Close Modal">&times;</span>
+        </div> -->
+
+        <div class="container">
+          <label for="uname"><b>Username</b></label>
+          <input type="text" placeholder="Enter Username" name="uname" id = "username" required>
+
+          <label for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="psw" id = "password" required>
+            
+          <button type="button" id="login-button">Login</button>
+          <div style = "font-size: 15;"><a href="register">Don't have a account? Register now!</a></div>
+        </div>
+        <div class="container" style="background-color:#f1f1f1;">
+          <span style = ""><a href="forget-password">Forget your password?</a></span>
+        </div>
+      </form>
+    </div>
+
+    <div id="terminal-container"></div>
+  </body>
+</html>
