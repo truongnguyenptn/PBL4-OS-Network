@@ -38,6 +38,7 @@ export function Terminal({ setTitle }) {
 	};
 
 	const submitInput = (value) => {
+		//console.log(value);
 		pushHistory({
 			text: prefix + value,
 			isInput: true,

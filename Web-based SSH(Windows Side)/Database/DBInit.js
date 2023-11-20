@@ -6,7 +6,7 @@ const sqlitedb = new Sequelize({
 });
 try {
   sqlitedb.authenticate();
-  console.log('Connection has been established successfully.');
+  console.log('Database has been established successfully.');
   
 } catch (error) {
   console.error('Unable to connect to the database:', error);

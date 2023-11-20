@@ -8,6 +8,8 @@ import { SettingsManagerProvider } from "./hooks/settings/settingsManagerContext
 import { ModalsView } from "./components/modals/ModalsView.jsx";
 import { useEffect } from "react";
 
+
+
 function App() {
 	useEffect(() => {
 		const onContextMenu = (event) => {
