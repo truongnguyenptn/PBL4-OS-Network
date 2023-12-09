@@ -13,6 +13,7 @@
     <link rel = "stylesheet" href = "/static/css/login-form.css">
   </head>
   <body>
+
     <div id="login-modal" class="modal">
   
       <form class="modal-content animate">
@@ -36,10 +37,124 @@
       </form>
     </div>
     
-    <div id="terminal-container">
-      <input type = "button" id = "btnCustomizeModal" value = "Customize"></input>
+    <div class = "row">
+      <div class = "column" style = "height: 100vh; overflow: scroll;">
+        <input type = "text" id = "txtExplorerPath"></input>
+        <input type = "button" id = "btnExplorerGoto" value = "Goto"></input>
+        <br>
+        <br>
+        <input type = "button" id = "btnUploadModal" value="Upload File"></input>
+        <input type = "button" id = "btnDownloadModal" value="Download File"></imput>
+        <br>
+        <table id = "divExplorer">
+          <tbody>
+            
+          </tbody>
+        </table>
+        <script>
+          function showOrHideOption(id){
+            var options = document.getElementById(id);
+            if(options.style.display === "none"){
+              options.style.display = "table-row";
+            }else{
+              options.style.display = "none";
+            }
+          }
+          function openDownloadModal(path,filename){
+            var downloadModal = document.getElementById('download-modal');
+            var txtDownloadPath = document.getElementById('txtDownloadPath');
+            var txtDownloadFilename = document.getElementById('txtDownloadFilename');
+            txtDownloadPath.value = path;
+            txtDownloadFilename.value = filename;
+            downloadModal.style.display = "block";
+          }
+          function openEditModal(path,permission){
+            var editModal = document.getElementById('edit-modal');
+            var txtOldPath = document.getElementById('txtOldPath');
+            var txtNewPath = document.getElementById('txtNewPath');
+            var chkUserRead = document.getElementById('chkUserRead');
+            var chkUserWrite = document.getElementById('chkUserWrite');
+            var chkUserExecute = document.getElementById('chkUserExecute');
+            var chkGroupRead = document.getElementById('chkGroupRead');
+            var chkGroupWrite = document.getElementById('chkGroupWrite');
+            var chkGroupExecute = document.getElementById('chkGroupExecute');
+            var chkOtherRead = document.getElementById('chkOtherRead');
+            var chkOtherWrite = document.getElementById('chkOtherWrite');
+            var chkOtherExecute = document.getElementById('chkOtherExecute');
+
+            txtOldPath.value = path;
+            txtNewPath.value = path;
+            chkUserRead.checked = permission[1] == "r";
+            chkUserWrite.checked = permission[2] == "w";
+            chkUserExecute.checked = permission[3] == "x";
+            chkGroupRead.checked = permission[4] == "r";
+            chkGroupWrite.checked = permission[5] == "w";
+            chkGroupExecute.checked = permission[6] == "x";
+            chkOtherRead.checked = permission[7] == "r";
+            chkOtherWrite.checked = permission[8] == "w";
+            chkOtherExecute.checked = permission[9] == "x";
+            editModal.style.display = "block";
+          }
+        </script>
+      </div>
+      
+      <div class = "column">
+        <div id="terminal-container">
+          <input type = "button" id = "btnCustomizeModal" value = "Customize"></input>
+        </div>
+        <div>Note: Explorer work on SFTP and Terminal work on SSH shell</div>
+      </div>
+      
     </div>
-    <input type = "button" id = "btnUploadModal" value="Upload File"></input>
+
+    <div id="edit-modal" class="modal" display = "none">
+      <form class="modal-content animate">
+        <div class="imgcontainer">
+          <p style = "font-size: 20"><b>Edit</b></p>
+          <span class="close" id = "btnEditModalClose">&times;</span>
+        </div>
+        <div class="container">
+          <input type = "hidden" id = "txtOldPath"></input>
+          <label>Rename/Move</label>
+          <input type = "text" id = "txtNewPath" placeholder="Enter new path."></input>
+          <br>
+          <label>Permission:</label>
+          <br>
+          <label>User:</label>
+          <br>
+          <input type="checkbox" id="chkUserRead" name="chkUserRead">
+          <label for="chkUserRead">Read</label>
+          <input type="checkbox" id="chkUserWrite" name="chkUserWrite">
+          <label for="chkUserWrite">Write</label>
+          <input type="checkbox" id="chkUserExecute" name="chkUserExecute">
+          <label for="chkUserExecute">Execute</label>
+          <br>
+          <label>Group:</label>
+          <br>
+          <input type="checkbox" id="chkGroupRead" name="chkGroupRead">
+          <label for="chkGroupRead">Read</label>
+          <input type="checkbox" id="chkGroupWrite" name="chkGroupWrite">
+          <label for="chkGroupWrite">Write</label>
+          <input type="checkbox" id="chkGroupExecute" name="chkGroupExecute">
+          <label for="chkGroupExecute">Execute</label>
+          <br>
+          <label>Other:</label>
+          <br>
+          <input type="checkbox" id="chkOtherRead" name="chkOtherRead">
+          <label for="chkOtherRead">Read</label>
+          <input type="checkbox" id="chkOtherWrite" name="chkOtherWrite">
+          <label for="chkOtherWrite">Write</label>
+          <input type="checkbox" id="chkOtherExecute" name="chkOtherExecute">
+          <label for="chkOtherExecute">Execute</label>
+          <br>
+        </div>
+        <div class="container" style="background-color:#f1f1f1;">
+          <button type = "button" id = "btnEdit">Edit</button>
+        </div>
+      </form>
+    </div>
+    
+    
     <div id="upload-modal" class="modal" display = "none">
       <form class="modal-content animate">
         <div class="imgcontainer">
@@ -58,7 +173,7 @@
       </form>
     </div>
 
-    <input type = "button" id = "btnDownloadModal" value="Download File"></imput>
+    
     <div id="download-modal" class="modal" display = "none">
       <form class="modal-content animate">
         <div class="imgcontainer">
@@ -76,6 +191,8 @@
         </div>
       </form>
     </div>
+
+    
 
     <div id="customize-modal" class="modal" display = "none">
       <form class="modal-content animate">

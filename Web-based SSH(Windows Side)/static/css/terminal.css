@@ -20,3 +20,22 @@ h1 {
 #terminal-container .terminal:focus .terminal-cursor {
   background-color: #fafafa;
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+ }
+
+.column {
+  flex: 50%;
+  height: 500px;
+}
+
+tbody{
+  display: block;
+  text-decoration: none;
+  transition: all 0.25s ease-out;
+}
+tr:hover{
+  background-color: lightgray;
+}

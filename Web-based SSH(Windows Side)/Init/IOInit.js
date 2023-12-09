@@ -1,3 +1,5 @@
+
+
 var SSHClient = require('ssh2').Client;
 const { getRSA,decryptRSA,decryptRSAFromBufferArray } = require('.././Controller/rsa.js');
 
@@ -58,27 +60,59 @@ function ioInit(server){
             }).on('close', function() {
               conn.end();
             });
+
           });
 
           conn.sftp((sftpErr, sftp) => {
             if (sftpErr) console.log(sftpErr);
+
+            // sftp.readdir("/home/"+username, (err, list) => {
+            //   if (err) throw err;
+            //   console.dir(list);
+            // });
+
+            socket.on('get-directories-list',(res)=>{
+                sftp.readdir(res.path, (err, list) => {
+                  if (err){
+                    socket.emit('get-directories-list',{
+                      err:err
+                    })
+                  } else{
+                    socket.emit('get-directories-list',{
+                    list:list,
+                    path:res.path
+                  });
+                  }
+                  
+                });
+            });
+            socket.on('edit',(res)=>{
+              try{
+                sftp.rename(res.oldPath,res.newPath);
+                sftp.chmod(res.newPath,res.chmod);
+                socket.emit('data', `\r\nFile ${res.oldPath} has been renamed to ${res.newPath} and its permission changed to ${res.chmod}.\r\n`);
+              }catch(err){
+                console.log(err);
+              } 
+            });
+
             socket.on('file-upload', (res) => {
               try{
-                if(res.status === 'create_buffer') uploadBuffers[`/home/${username}/${res.destinationFolder}`] = [];
-                if(res.buffer !== undefined) uploadBuffers[`/home/${username}/${res.destinationFolder}`].push(res.buffer);
+                if(res.status === 'create_buffer') uploadBuffers[`${res.destinationFolder}/${res.filename}`] = [];
+                if(res.buffer !== undefined) uploadBuffers[`${res.destinationFolder}/${res.filename}`].push(res.buffer);
                 if(res.status === 'complete'){
-                    uploadBuffers[`/home/${username}/${res.destinationFolder}`] = Buffer.concat(uploadBuffers[`/home/${username}/${res.destinationFolder}`]);
+                    uploadBuffers[`${res.destinationFolder}/${res.filename}`] = Buffer.concat(uploadBuffers[`${res.destinationFolder}/${res.filename}`]);
                     console.log(uploadBuffers);
-                    sftp.mkdir(`/home/${username}/${res.destinationFolder}`,()=>{});
+                    sftp.mkdir(`${res.destinationFolder}/${res.filename}`,()=>{});
                     
-                    var writeStream = sftp.createWriteStream(`/home/${username}/${res.destinationFolder}/${res.filename}`,{
+                    var writeStream = sftp.createWriteStream(`${res.destinationFolder}/${res.filename}`,{
                       start:res.start,
                       flags: 'a', // w - write and a - append
                       encoding: null, // use null for binary files
                       mode: 0o666, // mode to use for created file (rwx)
                     });
-                    writeStream.write(uploadBuffers[`/home/${username}/${res.destinationFolder}`],()=>{});
-                    uploadBuffers[`/home/${username}/${res.destinationFolder}`] = undefined;
+                    writeStream.write(uploadBuffers[`${res.destinationFolder}/${res.filename}`],()=>{});
+                    uploadBuffers[`${res.destinationFolder}/${res.filename}`] = undefined;
                     socket.emit('data', `\r\nFile ${res.destinationFolder}/${res.filename} has been successfully uploaded.\r\n`);
                 }            
               }catch(sub_err2){
