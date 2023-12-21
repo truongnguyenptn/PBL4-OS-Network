@@ -23,11 +23,11 @@ Session.init({
 	},
 	privateKey:{
 		type: DataTypes.TEXT,
-		null:false,
+		null:true,
 	},
 	publicKey:{
 		type: DataTypes.TEXT,
-		null:false,
+		null:true,
 	},
 	expiration:{
 		type: DataTypes.DATE,

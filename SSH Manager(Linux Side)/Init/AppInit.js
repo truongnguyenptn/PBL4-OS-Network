@@ -1,23 +1,66 @@
-var fs = require('fs');
-var path = require('path');
-var express = require('express');
-var app = express();
-var crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+const app = express();
+const crypto = require('crypto');
+const ejs = require('ejs');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const sessions = require('express-session');
+
+
+const { changePasswordExpiration,sessionKeyLength,loginExpiration } = require('.././getConfig');
 
 const { User } = require('.././Database/User');
 const { Session } = require('.././Database/Session');
 
 const { getActivatedUser,registerUser,changePasswordUsingSession,generateChangePasswordSession } = require('.././Controller/user.js');
-const { getSession,getChangePasswordSession } = require('.././Controller/session');
+const { getSession,getChangePasswordSession,generateRandomString } = require('.././Controller/session');
+const { showSession,loginAdmin,checkAdminLogin,logoutAdmin,
+getInactivatedUsers,getActiveUsers,getBlockedUsers,
+adminUpdateUser,enableUser,disableUser,
+adminActivateUser,adminGenerateChangePasswordSession } = require('.././Controller/admin');
 
 const { generateRSA,decryptRSA,encryptRSA,decryptRSAFromBufferArray,encryptRSAToBufferArray } = require('.././Controller/rsa.js');
 
 const serverRSA = generateRSA();
 
+app.set('view engine', 'ejs');
+
+app.use("/static",express.static('static'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(sessions({
+	secret:generateRandomString(sessionKeyLength),
+    saveUninitialized:true,
+    cookie: { maxAge: loginExpiration },
+    resave: false
+}));
+
 console.log(serverRSA);
+
+async function processRequest(req,res,callback){
+		var responseMessage;
+		try{
+			var bufferJSONArray = req.body.encrypted;
+			var bufferArray = [];
+			for(i = 0;i < bufferJSONArray.length;i++){
+				bufferArray.push(new Buffer.from(bufferJSONArray[i]));
+			}
+			var decryptedJSON = JSON.parse(decryptRSAFromBufferArray(bufferArray,serverRSA.privateKey));
+			var query = decryptedJSON.query;
+			var publicKey = decryptedJSON.publicKey;
+			var responseMessage = await callback(req,query);
+			var encryptedData = encryptRSAToBufferArray(responseMessage,publicKey);
+			res.writeHead(200, {'Content-Type': 'application/json'});
+			res.write(JSON.stringify({ encrypted:JSON.stringify(encryptedData) })); 
+			res.end();
+		}catch(err){
+			console.log(err);
+			res.writeHead(200, {'Content-Type': 'application/json'});
+			res.write(JSON.stringify({ message:'Error Occured.' , error : true})); 
+			res.end();
+		}
+}
 
 app.get("/get-rsa",function (req, res) { 
 	try{
@@ -202,4 +245,128 @@ app.post("/register",function (req, res) {
 	 
 });
 
+app.get("/admin",function(req, res) {
+	try{
+		(async () => {
+			if(await checkAdminLogin(req)){
+				res.sendFile('static/html/adminPage.html', {
+			        root: path.join(__dirname, '.././')
+			    })
+			}else{
+				res.send(`<script>
+					alert("You're not logged as Admin.");
+					window.location.replace("/admin/login");
+					</script>`);
+			}
+		})();
+	}catch(e){
+		console.log(e);
+		res.send("Error Occured");
+	}
+})
+app.post("/admin/getInactivatedUsers",function (req, res) { 
+	//remember that express.json() automatically parsed your body
+	//usually, you must do that by JSON.parse
+	processRequest(req,res,getInactivatedUsers);
+});
+app.post("/admin/getActiveUsers",function (req, res) { 
+	//remember that express.json() automatically parsed your body
+	//usually, you must do that by JSON.parse
+	processRequest(req,res,getActiveUsers);
+});
+app.post("/admin/getBlockedUsers",function (req, res) { 
+	//remember that express.json() automatically parsed your body
+	//usually, you must do that by JSON.parse
+	processRequest(req,res,getBlockedUsers);
+});
+app.get("/admin/login",function (req, res) { 
+	//console.log(req.query);
+	try{
+	    res.sendFile('static/html/loginAdmin.html', {
+	       	root: path.join(__dirname, '.././')
+	    }) 
+	}catch(e){
+		console.log(e);
+		res.send("Error Occured");
+	}
+});
+app.post("/admin/login",function (req, res) { 
+	//remember that express.json() automatically parsed your body
+	//usually, you must do that by JSON.parse
+	processRequest(req,res,loginAdmin);
+});
+
+app.get("/admin/logout",function (req, res) { 
+	//console.log(req.query);
+	try{
+	    logoutAdmin(req);
+	    res.send(`<script>
+	    					alert("You're logged out");
+	    					window.location.replace("/admin/login");
+	    					</script>`);
+	}catch(e){
+		console.log(e);
+		res.send(`<script>
+					alert("Logout failed");
+					window.location.replace("/admin");
+					</script>`);
+	}
+});
+
+app.get("/admin/updateUser",function (req, res) { 
+	//console.log(req.query);
+	(async ()=>{
+		try{
+			if(await checkAdminLogin(req)){
+				if(!req.query.id) throw new Error('ID cannot be blank');
+				var user = await User.findOne({
+					where:{
+						id:req.query.id
+					}
+				})
+				if(user == null){
+					res.send('User not found');
+				}else{
+					res.render('updateUser.ejs', {
+						user:user
+					});
+				}
+			}else{
+				res.send(`<script>
+					alert("You're not logged as Admin.");
+					window.location.replace("/admin/login");
+					</script>`);
+			}
+	    
+		}catch(e){
+			console.log(e);
+			res.send("Error Occured");
+		}
+	})();
+});
+app.post("/admin/updateUser",function (req, res) { 
+	//remember that express.json() automatically parsed your body
+	//usually, you must do that by JSON.parse
+	processRequest(req,res,adminUpdateUser);
+});
+app.post("/admin/enableUser",function (req, res) { 
+	//remember that express.json() automatically parsed your body
+	//usually, you must do that by JSON.parse
+	processRequest(req,res,enableUser);
+});
+app.post("/admin/disableUser",function (req, res) { 
+	//remember that express.json() automatically parsed your body
+	//usually, you must do that by JSON.parse
+	processRequest(req,res,disableUser);
+});
+app.post("/admin/activateUser",function (req, res) { 
+	//remember that express.json() automatically parsed your body
+	//usually, you must do that by JSON.parse
+	processRequest(req,res,adminActivateUser);
+});
+app.post("/admin/generateChangePasswordSession",function (req, res) { 
+	//remember that express.json() automatically parsed your body
+	//usually, you must do that by JSON.parse
+	processRequest(req,res,adminGenerateChangePasswordSession);
+});
 module.exports = {app};

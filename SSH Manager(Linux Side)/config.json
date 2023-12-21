@@ -1,4 +1,8 @@
 {
 	"changePasswordExpiration":600000,
-	"sessionKeyLength":512
+	"loginExpiration":86400000,
+	"banExpiration":3600000,
+	"maxLoginTries":10,
+	"maxSessionKeyRefresh":5,
+	"sessionKeyLength":256
 }

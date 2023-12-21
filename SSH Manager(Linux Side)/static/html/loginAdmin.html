@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/static/css/login-form.css" />
+<script src="/static/js/bundle.js"></script>
+<script src="/static/js/rsa.js"></script>
+<script src="/static/js/regex.js"></script>
+</head>
+<body>
+
+
+
+<div class="container center">
+  <form action = "/login/admin" method = "post">
+    <h1 style="text-align: center;">Admin Login</h1>
+    <label>Note: 
+    <br>
+    - The session codes is really long and cannot be easily guessed. 
+    <br>
+    - The session codes is refreshed in every X wrong times guessing and after someone logged in.
+    <br>
+    - You will be banned for some hours if you guessed password wrong too many times.
+    <br>
+    - The only way to get session codes is through Moderators.
+    <br>
+</label>
+    <h5>Session Key</h5>
+    <input type="password" name="sessionKey" id = "txtSessionKey">
+    
+    <h5>Session Password</h5>
+    <input type="password" name="sessionPassword" id = "txtSessionPassword">
+    <label style = "color:red" id = "lblError"></label>
+    <input type="submit"  id = "btnSubmit" value="Login">
+  </form>
+</div>
+<script>
+    var node_crypto = require('crypto');
+    var Buffer = require('safer-buffer').Buffer;
+    var nodeRSA = require('node-rsa');
+
+    const clientRSA = generateRSA();
+    const clientPublicKey = clientRSA.exportKey('pkcs1-public-pem');
+    const clientPrivateKey = clientRSA.exportKey('pkcs1-private-pem');
+
+    document.getElementById('btnSubmit')
+            .addEventListener('click', (e) => {
+                e.preventDefault();
+
+                var sessionKey = document.getElementById('txtSessionKey').value;
+                var sessionPassword = document.getElementById('txtSessionPassword').value;
+                
+                document.getElementById('lblError').innerHTML = "";
+
+                var JSONString = JSON.stringify({
+                    query:{
+                        sessionKey,sessionPassword
+                    },
+                    publicKey:clientPublicKey
+                });
+                
+                (async () => {
+                    var encryptedData = await encryptRSAToBufferArray(JSONString);
+                    var response = await fetch('', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({encrypted:encryptedData}),
+                    })
+                    .then((res) => {
+                        return res.json();
+                    })
+                    if(response.status === 'failed'){
+                        alert(response.message);
+                    }
+                    var bufferJSONArray = JSON.parse(response.encrypted);
+
+                    var bufferArray = [];
+                    for(i = 0;i<bufferJSONArray.length;i++){
+                        bufferArray.push(new Buffer.from(bufferJSONArray[i]));
+                    }
+                    console.log(bufferJSONArray);
+                    console.log(bufferArray);
+
+                    var decryptedJSON = JSON.parse(decryptRSAFromBufferArray(bufferArray,clientPrivateKey));
+                    console.log(decryptedJSON);
+                    
+                    if(decryptedJSON.status === 'succeeded'){
+                        alert(decryptedJSON.message);
+                        window.location.replace("/admin");
+                    }else{
+                        document.getElementById('lblError').innerHTML = decryptedJSON.message;
+                    }
+                })();
+                
+            });
+</script>
+</body>
+</html>

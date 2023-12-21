@@ -34,6 +34,7 @@ async function registerUser(query){
 				]
 			} 
 		});
+
 		if(check_user !== null) throw new Error("Username or Email exists");
 		var new_user = await User.create({
 			firstname:query.firstname,
@@ -51,6 +52,49 @@ async function registerUser(query){
 	}catch(err){
 		message = {
 			message:err.message,
+			status:"failed"
+		};
+	}
+	return JSON.stringify(message);
+}
+
+async function updateUser(query){
+	var message = {};
+	try{
+		var user = await User.findOne({ 
+			where: { 
+				id:query.id
+			} 
+		});
+		if(user == null) throw new Error('User not exists')
+		var check_user = await User.findOne({ 
+			where: { 
+				email:query.email
+			} 
+		});
+		if(check_user !== null && check_user.id != user.id) throw new Error("Email exists");
+
+		if(!emailRegex.test(query.email)) throw new Error('Invalid Email');
+		if(!nameRegex.test(query.firstname)) throw new Error('Invalid Firstname');
+		if(!nameRegex.test(query.lastname)) throw new Error('Invalid Lastname');
+		if(!descriptionRegex.test(query.description)) throw new Error('Invalid Description');
+
+		await user.update({
+			firstname:query.firstname,
+			lastname:query.lastname,
+			email:query.email,
+			description:query.description,
+			updatedAt:new Date(Date())
+		});
+		
+		message = {
+			status:'succeeded',
+			message:'User Update complete.'
+		}
+	}catch(err){
+		console.log(err);
+		message = {
+			message:err,
 			status:"failed"
 		};
 	}
@@ -159,6 +203,10 @@ If you want to change your password, Please follow below steps:
 
 If you have any problem, please contact to us.
 Thank for using our service.`);
+	await user.update({
+			isAdded:true,
+			updatedAt:new Date(Date()),
+		})
 	responseMessage = {
 		status:"succeeded",
 		message:"Account activated."
@@ -225,4 +273,4 @@ Thank for using our service.`);
 	}
 	return responseMessage;
 }
-module.exports = {getActivatedUser,registerUser,changePasswordUsingSession,activateUser,generateChangePasswordSession};
+module.exports = {getActivatedUser,registerUser,changePasswordUsingSession,activateUser,generateChangePasswordSession,updateUser};

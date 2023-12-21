@@ -1,9 +1,9 @@
 const { Op } = require('sequelize');
 const { User } = require('.././Database/User');
-const { Session,SessionType,getChangePasswordSessionType } = require('.././Database/Session');
+const { Session,SessionType,getChangePasswordSessionType,getLoginSessionType } = require('.././Database/Session');
 const crypto = require('crypto');
 
-const { changePasswordExpiration,sessionKeyLength } = require('.././getConfig');
+const { changePasswordExpiration,sessionKeyLength,loginExpiration } = require('.././getConfig');
 
 async function createChangePasswordSession(user){
 	var cpSessionType = await getChangePasswordSessionType();
@@ -25,6 +25,25 @@ async function createChangePasswordSession(user){
 		isValid:true,
 		UserId:user.id,
 		SessionTypeId:cpSessionType.id
+	});
+}
+
+async function createLoginSession(sessionKey,sessionPassword){
+	var loginSessionType = await getLoginSessionType();
+	return await Session.findOne({
+		where: {
+			sessionKey:sessionKey,
+			sessionPassword:sessionPassword
+		}
+	}) || await Session.create({
+		sessionKey:sessionKey,
+		sessionPassword:sessionPassword,
+		publicKey:null,
+		privateKey:null,
+		expiration:parseInt(loginExpiration),
+		isValid:true,
+		UserId:null,
+		SessionTypeId:loginSessionType.id
 	});
 }
 
@@ -64,4 +83,20 @@ async function getChangePasswordSession(sessionKey){
 	});
 }
 
-module.exports = { createChangePasswordSession,getSession,getChangePasswordSession }
+
+
+async function getChangePasswordSession(sessionKey){
+	var loginSessionType = await getLoginSessionType();
+	return await Session.findOne({
+		where: {
+			sessionKey:sessionKey,
+			expiration:{
+				[Op.gte]:new Date()
+			},
+			isValid:true,
+			SessionTypeId:loginSessionType.id
+		}
+	});
+}
+
+module.exports = { createChangePasswordSession,createLoginSession,getSession,getChangePasswordSession,generateRandomString }

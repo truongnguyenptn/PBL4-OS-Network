@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/static/css/topnav.css" />
+<link rel="stylesheet" href="/static/css/vertical-tab.css" />
+<link rel="stylesheet" href="/static/css/table.css" />
+<script src="/static/js/bundle.js"></script>
+<script src="/static/js/rsa.js"></script>
+<script src="/static/js/regex.js"></script>
+</head>
+<body>
+	<div class="topnav">
+	  <div style = "font-size: 30px;">Admin Page</div>
+	  <a href="/admin/logout" class="split">Logout</a>
+	</div>
+		<div class="tab">
+	  <button class="tablinks" onclick="openTab(event, 'tabInactivatedUsers')" id="defaultOpen">Inactivated Users</button>
+	  <button class="tablinks" onclick="openTab(event, 'tabActiveUsers')" id="defaultOpen">Active Users</button>
+	  <button class="tablinks" onclick="openTab(event, 'tabBlockedUsers')" id="defaultOpen">Blocked Users</button>
+	</div>
+
+	<div id = "divSession"></div>
+
+	<div id="tabInactivatedUsers" class="tabcontent active" style="display: block">
+	  <h3>Inactivated Users</h3>
+	  <table id="tblInactivatedUsers">
+	  	<thead>
+	  		<tr>
+	  			<th>ID</th>
+	  			<th>Username</th>
+	  			<th>First Name</th>
+	  			<th>Last Name</th>
+	  			<th>Email</th>
+	  			<th>Description</th>
+	  			<th>Action</th>
+	  		</tr>
+	  	</thead>
+	  	<tbody>
+	  	</tbody>
+	  </table>
+	</div>
+	<div id="tabActiveUsers" class="tabcontent">
+	  <h3>Active Users</h3>
+	  <table id="tblActiveUsers">
+	  	<thead>
+	  		<tr>
+	  			<th>ID</th>
+	  			<th>Username</th>
+	  			<th>First Name</th>
+	  			<th>Last Name</th>
+	  			<th>Email</th>
+	  			<th>Description</th>
+	  			<th>Action</th>
+	  		</tr>
+	  	</thead>
+	  	<tbody>
+	  	</tbody>
+	  </table>
+	</div>
+	<div id="tabBlockedUsers" class="tabcontent">
+	  <h3>Blocked Users</h3>
+	  <table id="tblBlockedUsers">
+	  	<thead>
+	  		<tr>
+	  			<th>ID</th>
+	  			<th>Username</th>
+	  			<th>First Name</th>
+	  			<th>Last Name</th>
+	  			<th>Email</th>
+	  			<th>Description</th>
+	  			<th>Action</th>
+	  		</tr>
+	  	</thead>
+	  	<tbody>
+	  	</tbody>
+	  </table>
+	</div>
+</body>
+<script>
+	var node_crypto = require('crypto');
+    var Buffer = require('safer-buffer').Buffer;
+    var nodeRSA = require('node-rsa');
+
+    const clientRSA = generateRSA();
+    const clientPublicKey = clientRSA.exportKey('pkcs1-public-pem');
+    const clientPrivateKey = clientRSA.exportKey('pkcs1-private-pem');
+	function openTab(evt,  id) {
+	  var i, tabcontent, tablinks;
+	  tabcontent = document.getElementsByClassName("tabcontent");
+	  for (i = 0; i < tabcontent.length; i++) {
+	    tabcontent[i].style.display = "none";
+	  }
+	  tablinks = document.getElementsByClassName("tablinks");
+	  for (i = 0; i < tablinks.length; i++) {
+	    tablinks[i].className = tablinks[i].className.replace(" active", "");
+	  }
+	  document.getElementById(id).style.display = "block";
+	  evt.currentTarget.className += " active";
+	}
+	function inactivatedUsersAction(id){
+		return `<a href = '/admin/updateUser?id=${id}'><button>Update</button></a> <button onclick="sendRequest({id:${id}},'/admin/activateUser')">Activeate User</button>`;
+	}
+	function activeUsersAction(id){
+		return `<button onclick="sendRequest({id:${id}},'/admin/disableUser')">Disable</button> <a href = '/admin/updateUser?id=${id}'><button>Update</button></a><br><button onclick="sendRequest({id:${id}},'/admin/generateChangePasswordSession')">Generate Change Password Session</button>`;
+	}
+	function blockedUsersAction(id){
+		return `<button onclick="sendRequest({id:${id}},'/admin/enableUser')">Enable</button> <a href = '/admin/updateUser?id=${id}'><button>Update</button></a>`;
+	}
+
+	async function sendRequest(query,url){
+		var JSONString = JSON.stringify({
+            query:query,
+            publicKey:clientPublicKey
+        });
+		var encryptedData = await encryptRSAToBufferArray(JSONString);
+        var response = await fetch(`${url}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({encrypted:encryptedData}),
+        })
+        .then((res) => {
+            return res.json();
+        })
+        if(response.status === 'failed'){
+            alert(response.message);
+        }
+        var bufferJSONArray = JSON.parse(response.encrypted);
+
+        var bufferArray = [];
+        for(i = 0;i<bufferJSONArray.length;i++){
+            bufferArray.push(new Buffer.from(bufferJSONArray[i]));
+        }
+        //console.log(bufferJSONArray);
+        //console.log(bufferArray);
+
+        var decryptedJSON = JSON.parse(decryptRSAFromBufferArray(bufferArray,clientPrivateKey));
+        console.log(decryptedJSON);
+
+
+
+        alert(
+`Status: ${decryptedJSON.status}
+Message: ${decryptedJSON.message}`
+		);
+
+        getTableData('InactivatedUsers',inactivatedUsersAction);
+		getTableData('ActiveUsers',activeUsersAction);
+		getTableData('BlockedUsers',blockedUsersAction);
+	}
+
+	async function getTableData(keyword,actionContent){
+		var JSONString = JSON.stringify({
+            query:{},
+            publicKey:clientPublicKey
+        });
+		var encryptedData = await encryptRSAToBufferArray(JSONString);
+        var response = await fetch(`/admin/get${keyword}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({encrypted:encryptedData}),
+        })
+        .then((res) => {
+            return res.json();
+        })
+        if(response.status === 'failed'){
+            alert(response.message);
+        }
+        var bufferJSONArray = JSON.parse(response.encrypted);
+
+        var bufferArray = [];
+        for(i = 0;i<bufferJSONArray.length;i++){
+            bufferArray.push(new Buffer.from(bufferJSONArray[i]));
+        }
+        //console.log(bufferJSONArray);
+        //console.log(bufferArray);
+
+        var decryptedJSON = JSON.parse(decryptRSAFromBufferArray(bufferArray,clientPrivateKey));
+        console.log(decryptedJSON);
+        
+        var tBody = document.getElementById(`tbl${keyword}`).tBodies[0];
+
+        if(decryptedJSON.status === 'succeeded'){
+            tBody.innerHTML = "";
+
+        	var usersList = decryptedJSON.usersList;
+			for(let i = 0;i<usersList.length;i++){
+				var user = usersList[i];
+				var row = tBody.insertRow();
+				var cellId = row.insertCell(0);
+				cellId.innerHTML = user.id;
+				var cellUsername = row.insertCell(1);
+				cellUsername.innerHTML = user.username;
+				var cellFirstname = row.insertCell(2);
+				cellFirstname.innerHTML = user.firstname;
+				var cellLastname = row.insertCell(3);
+				cellLastname.innerHTML = user.lastname;
+				var cellEmail = row.insertCell(4);
+				cellEmail.innerHTML = user.email;
+				var cellDescription = row.insertCell(5);
+				cellDescription.innerHTML = user.description;
+				var cellAction = row.insertCell(6);
+				cellAction.innerHTML = actionContent(user.id);
+			}
+        }
+	}
+	function sleep(ms) {
+	    return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	(async () => {
+		while(true){
+			getTableData('InactivatedUsers',inactivatedUsersAction);
+			getTableData('ActiveUsers',activeUsersAction);
+			getTableData('BlockedUsers',blockedUsersAction);
+        	await sleep(10000);
+		}
+		
+	})();
+
+document.getElementById("defaultOpen").click();
+</script>
+<html>

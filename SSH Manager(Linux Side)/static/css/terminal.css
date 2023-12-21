@@ -1,0 +1,41 @@
+body {
+  font-family: helvetica, sans-serif, arial;
+  font-size: 1em;
+  color: #111;
+}
+h1 {
+  text-align: center;
+}
+#terminal-container {
+  width: 960px;
+  height: 600px;
+  margin: 0 auto;
+  padding: 2px;
+}
+#terminal-container .terminal {
+  background-color: #111;
+  color: #fafafa;
+  padding: 2px;
+}
+#terminal-container .terminal:focus .terminal-cursor {
+  background-color: #fafafa;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+ }
+
+.column {
+  flex: 50%;
+  height: 500px;
+}
+
+tbody{
+  display: block;
+  text-decoration: none;
+  transition: all 0.25s ease-out;
+}
+tr:hover{
+  background-color: lightgray;
+}
