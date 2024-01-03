@@ -1,0 +1,133 @@
+<mxfile host="Electron" modified="2023-12-31T21:39:23.662Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.3 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="OTx6tc4C3b_ZhFlMMAH0" version="22.0.3" type="device">
+  <diagram name="Page-1" id="KuB_e3gkM4RfhNurqz7U">
+    <mxGraphModel dx="1600" dy="1040" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-4" value="Client" style="verticalLabelPosition=bottom;sketch=0;aspect=fixed;html=1;verticalAlign=top;strokeColor=none;align=center;outlineConnect=0;shape=mxgraph.citrix.thin_client;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="1725" y="710" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-18" value="&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&amp;lt;&amp;lt;device&amp;gt;&amp;gt;&lt;br style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;Web Server Device&lt;/b&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=20;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="960" y="325" width="650" height="450" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-21" value="&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 18px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;&amp;lt;&amp;lt;Server&amp;gt;&amp;gt;&lt;/span&gt;&lt;br style=&quot;border-color: var(--border-color); color: rgb(0, 0, 0); font-family: Helvetica; font-size: 18px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); color: rgb(0, 0, 0); font-family: Helvetica; font-size: 18px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;NodeJS&lt;/b&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=10;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="1028.75" y="415" width="521.25" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-27" value="&lt;b style=&quot;font-size: 18px;&quot;&gt;NodeJS&#39;s SSH2&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="600" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-28" value="&lt;b style=&quot;font-size: 18px;&quot;&gt;Express&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="1226.25" y="510" width="117.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-29" value="&lt;b style=&quot;font-size: 18px;&quot;&gt;Socket.IO&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="600" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-31" value="&amp;lt;&amp;lt;protocol&amp;gt;&amp;gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;Socket.IO Protocol" style="endArrow=none;html=1;rounded=0;fontSize=18;" edge="1" parent="1" source="o3ZqQ6nXwf7odCHEh237-29" target="o3ZqQ6nXwf7odCHEh237-32">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1740" y="610" as="sourcePoint" />
+            <mxPoint x="1900" y="680" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-32" value="&amp;lt;&amp;lt;Web Browser&amp;gt;&amp;gt;&lt;br style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;SSH Browser" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=10;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="1710" y="500" width="150" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-34" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;fontSize=18;" edge="1" parent="1" source="o3ZqQ6nXwf7odCHEh237-32" target="o3ZqQ6nXwf7odCHEh237-4">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="1560" y="850" as="sourcePoint" />
+            <mxPoint x="1560" y="990" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-36" value="&amp;lt;&amp;lt;protocol&amp;gt;&amp;gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;HTTPS" style="endArrow=none;html=1;rounded=0;fontSize=18;" edge="1" parent="1" source="o3ZqQ6nXwf7odCHEh237-28" target="o3ZqQ6nXwf7odCHEh237-32">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1560" y="640" as="sourcePoint" />
+            <mxPoint x="1900" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-38" value="Transfer Execution Data&lt;br style=&quot;font-size: 18px;&quot;&gt;Transfer Files" style="endArrow=block;startArrow=block;endFill=1;startFill=1;html=1;rounded=0;fontSize=18;" edge="1" parent="1" source="o3ZqQ6nXwf7odCHEh237-27" target="o3ZqQ6nXwf7odCHEh237-29">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="1440" y="580" as="sourcePoint" />
+            <mxPoint x="1600" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-39" value="&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&amp;lt;&amp;lt;device&amp;gt;&amp;gt;&lt;br style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;Ubuntu Device&lt;/b&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 110%; font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/p&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=20;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="380" y="325" width="470" height="435" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-40" value="&amp;lt;&amp;lt;Server&amp;gt;&amp;gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;OpenSSH&lt;/b&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=10;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="522.5" y="630" width="185" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-41" value="&amp;lt;&amp;lt;protocol&amp;gt;&amp;gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;SSH Protocol" style="endArrow=none;html=1;rounded=0;fontSize=18;" edge="1" parent="1" source="o3ZqQ6nXwf7odCHEh237-40" target="o3ZqQ6nXwf7odCHEh237-27">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="760" y="842" as="sourcePoint" />
+            <mxPoint x="1060" y="820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-42" value="&amp;lt;&amp;lt;Server&amp;gt;&amp;gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;NodeJS&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;/b&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=10;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="522.5" y="430" width="185" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-43" value="&lt;b style=&quot;font-size: 18px;&quot;&gt;Express&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="559.9999999999999" y="510" width="117.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-44" value="&amp;lt;&amp;lt;protocol&amp;gt;&amp;gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;HTTPS" style="endArrow=none;html=1;rounded=0;fontSize=18;" edge="1" parent="1" source="o3ZqQ6nXwf7odCHEh237-43" target="o3ZqQ6nXwf7odCHEh237-28">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1391" y="556" as="sourcePoint" />
+            <mxPoint x="1860" y="604" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-45" value="- Users Management&lt;br style=&quot;font-size: 18px;&quot;&gt;- Web Resoures Provider" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="800" y="130" width="210" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-46" value="Admin" style="verticalLabelPosition=bottom;sketch=0;aspect=fixed;html=1;verticalAlign=top;strokeColor=none;align=center;outlineConnect=0;shape=mxgraph.citrix.thin_client;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="160" y="730" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-47" value="&amp;lt;&amp;lt;Web Browser&amp;gt;&amp;gt;&lt;br style=&quot;border-color: var(--border-color); font-size: 18px;&quot;&gt;SSH Browser" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=10;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="140" y="500" width="170" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-49" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;fontSize=18;" edge="1" parent="1" source="o3ZqQ6nXwf7odCHEh237-47" target="o3ZqQ6nXwf7odCHEh237-46">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="1570" y="860" as="sourcePoint" />
+            <mxPoint x="1570" y="1000" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-51" value="&amp;lt;&amp;lt;protocol&amp;gt;&amp;gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;HTTPS" style="endArrow=none;html=1;rounded=0;fontSize=18;" edge="1" parent="1" source="o3ZqQ6nXwf7odCHEh237-47" target="o3ZqQ6nXwf7odCHEh237-43">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-560" y="490" as="sourcePoint" />
+            <mxPoint x="25" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-52" value="" style="endArrow=none;dashed=1;html=1;rounded=0;dashPattern=12 12;fontSize=18;" edge="1" parent="1" source="o3ZqQ6nXwf7odCHEh237-43" target="o3ZqQ6nXwf7odCHEh237-45">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="970" y="580" as="sourcePoint" />
+            <mxPoint x="1020" y="530" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-53" value="" style="endArrow=none;dashed=1;html=1;rounded=0;dashPattern=12 12;fontSize=18;" edge="1" parent="1" source="o3ZqQ6nXwf7odCHEh237-28" target="o3ZqQ6nXwf7odCHEh237-45">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="664" y="520" as="sourcePoint" />
+            <mxPoint x="901" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-54" value="" style="endArrow=none;dashed=1;html=1;rounded=0;dashPattern=12 12;fontSize=18;" edge="1" parent="1" source="o3ZqQ6nXwf7odCHEh237-40" target="o3ZqQ6nXwf7odCHEh237-56">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="656" y="520" as="sourcePoint" />
+            <mxPoint x="780" y="945.3333333333334" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-55" value="" style="endArrow=none;dashed=1;html=1;rounded=0;dashPattern=12 12;fontSize=18;" edge="1" parent="1" source="o3ZqQ6nXwf7odCHEh237-56" target="o3ZqQ6nXwf7odCHEh237-27">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1070" y="930" as="sourcePoint" />
+            <mxPoint x="790" y="955.3333333333334" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-56" value="SSH Service&lt;br style=&quot;font-size: 18px;&quot;&gt;- Shell&lt;br style=&quot;font-size: 18px;&quot;&gt;- SFTP" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="850" y="840" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="o3ZqQ6nXwf7odCHEh237-57" value="" style="endArrow=none;dashed=1;html=1;rounded=0;dashPattern=12 12;fontSize=18;" edge="1" parent="1" source="o3ZqQ6nXwf7odCHEh237-56" target="o3ZqQ6nXwf7odCHEh237-29">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="972" y="850" as="sourcePoint" />
+            <mxPoint x="1125" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

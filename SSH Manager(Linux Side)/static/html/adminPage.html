@@ -99,7 +99,7 @@
 	  evt.currentTarget.className += " active";
 	}
 	function inactivatedUsersAction(id){
-		return `<a href = '/admin/updateUser?id=${id}'><button>Update</button></a> <button onclick="sendRequest({id:${id}},'/admin/activateUser')">Activeate User</button>`;
+		return `<a href = '/admin/updateUser?id=${id}'><button>Update</button></a> <button onclick="sendRequest({id:${id}},'/admin/activateUser')">Activate User</button>`;
 	}
 	function activeUsersAction(id){
 		return `<button onclick="sendRequest({id:${id}},'/admin/disableUser')">Disable</button> <a href = '/admin/updateUser?id=${id}'><button>Update</button></a><br><button onclick="sendRequest({id:${id}},'/admin/generateChangePasswordSession')">Generate Change Password Session</button>`;

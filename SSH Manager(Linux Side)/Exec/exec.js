@@ -18,8 +18,8 @@ async function changeLinuxPassword(username,newPassword){
 }
 
 async function addLinuxUser(username,password,fullName,email){
-	return await executeCommand(`echo '${password}\n${password}\n${fullName}\n\n\n\n${email}' | adduser ${username} | usermod -a -G ssh-allowed ${username}
-`);
+	await executeCommand(`echo '${password}\n${password}\n${fullName}\n\n\n\n${email}\n' | adduser ${username}`);
+	return await executeCommand(`usermod -a -G ssh-allowed ${username}`);
 }
 
 async function disableSSHUser(username){
@@ -38,6 +38,10 @@ async function getSSHUsersList(){
 	result = result.split(",");
 	return result;
 }
+
+// (async () => {
+// 	addLinuxUser("stormyx123",'','Stormyx',"");
+// })();
 
 console.log("If you want to use Admin Page, you need to run the server in root privilege(or as a sudo-er).");
 

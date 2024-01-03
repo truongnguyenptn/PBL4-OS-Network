@@ -133,13 +133,18 @@ async function loginAdmin(req,query){
 }
 
 async function logoutAdmin(req){
-	session = await getSession(req.session.sessionKey);
-	await session.update({
-		isValid:false,
-		expiration:0
-	});
-	req.session.sessionKey = undefined;
-	req.session.sessionPassword = undefined;
+	try{
+		session = await getSession(req.session.sessionKey);
+		await session.update({
+			isValid:false,
+			expiration:0
+		});
+		req.session.sessionKey = undefined;
+		req.session.sessionPassword = undefined;
+	}catch(e){
+		
+	}
+	
 }
 
 async function checkAdminLogin(req){

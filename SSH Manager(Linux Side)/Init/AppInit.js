@@ -92,6 +92,8 @@ app.post("/get-session-rsa",function (req,res){
 			var publicKey = decryptedJSON.publicKey;
 
 			var session = await getSession(query.sessionKey);
+			console.log("session");
+			console.log(session);
 
 		    var responseMessage = JSON.stringify(session ? {
 		    	status:'succeeded',
@@ -124,24 +126,37 @@ app.post("/check-change-password-session",function (req,res){
 			var query = decryptedJSON.query;
 			var publicKey = decryptedJSON.publicKey;
 
+			console.log(decryptedJSON);
+
 			var session = await getChangePasswordSession(query.sessionKey);
+
 
 			var innerJSONBufferArray = JSON.parse(query.encrypted);
 			var innerBufferArray = [];
 			for(i = 0;i < innerJSONBufferArray.length;i++){
 				innerBufferArray.push(new Buffer.from(innerJSONBufferArray[i]));
 			}
-
-			var innerDecrypted = JSON.parse(decryptRSAFromBufferArray(innerBufferArray,session.privateKey));
+			var responseMessage;
+			try{
+				var innerDecrypted = JSON.parse(decryptRSAFromBufferArray(innerBufferArray,session.privateKey));
 			
 
-		    var responseMessage = JSON.stringify(session.sessionPassword === innerDecrypted.query.sessionPassword ? {
-		    	status:"succeeded",
-		    	message:"Session Key and Password match."
-		    }:{
-		    	status:"failed",
-		    	message:"Session Key or/and Session Password is wrong."
-		    });
+			    responseMessage = JSON.stringify(session.sessionPassword === innerDecrypted.query.sessionPassword ? {
+			    	status:"succeeded",
+			    	message:"Session Key and Password match."
+			    }:{
+			    	status:"failed",
+			    	message:"Session Key or/and Session Password is wrong."
+			    });
+			}catch(ex){
+				console.log(ex);
+				responseMessage = {
+			    	status:"failed",
+			    	message:"Session Key or/and Session Password is wrong."
+			    };
+			}
+
+			
 
 		    console.log(responseMessage);
 

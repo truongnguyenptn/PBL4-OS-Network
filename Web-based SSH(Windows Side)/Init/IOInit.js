@@ -90,34 +90,47 @@ function ioInit(server){
               try{
                 sftp.rename(res.oldPath,res.newPath);
                 sftp.chmod(res.newPath,res.chmod);
-                socket.emit('data', `\r\nFile ${res.oldPath} has been renamed to ${res.newPath} and its permission changed to ${res.chmod}.\r\n`);
+                socket.emit('data', `\r\n${res.oldPath} has been renamed to ${res.newPath} and its permission changed to ${res.chmod}.\r\n`);
+              }catch(err){
+                console.log(err);
+              } 
+            });
+
+            socket.on('delete',(res)=>{
+              try{
+                
+                //socket.emit('data', `\r\n${res.oldPath} has been deleted successfully.\r\n`);
               }catch(err){
                 console.log(err);
               } 
             });
 
             socket.on('file-upload', (res) => {
-              try{
-                if(res.status === 'create_buffer') uploadBuffers[`${res.destinationFolder}/${res.filename}`] = [];
-                if(res.buffer !== undefined) uploadBuffers[`${res.destinationFolder}/${res.filename}`].push(res.buffer);
-                if(res.status === 'complete'){
-                    uploadBuffers[`${res.destinationFolder}/${res.filename}`] = Buffer.concat(uploadBuffers[`${res.destinationFolder}/${res.filename}`]);
-                    console.log(uploadBuffers);
-                    sftp.mkdir(`${res.destinationFolder}/${res.filename}`,()=>{});
-                    
-                    var writeStream = sftp.createWriteStream(`${res.destinationFolder}/${res.filename}`,{
-                      start:res.start,
-                      flags: 'a', // w - write and a - append
-                      encoding: null, // use null for binary files
-                      mode: 0o666, // mode to use for created file (rwx)
-                    });
-                    writeStream.write(uploadBuffers[`${res.destinationFolder}/${res.filename}`],()=>{});
-                    uploadBuffers[`${res.destinationFolder}/${res.filename}`] = undefined;
-                    socket.emit('data', `\r\nFile ${res.destinationFolder}/${res.filename} has been successfully uploaded.\r\n`);
-                }            
-              }catch(sub_err2){
-                console.log(sub_err2);
-              }
+              (async() => {
+                try{
+                  if(res.status === 'create_buffer') uploadBuffers[`${res.destinationFolder}/${res.filename}`] = [];
+                  if(res.buffer !== undefined) uploadBuffers[`${res.destinationFolder}/${res.filename}`].push(res.buffer);
+                  if(res.status === 'complete'){
+                      uploadBuffers[`${res.destinationFolder}/${res.filename}`] = Buffer.concat(uploadBuffers[`${res.destinationFolder}/${res.filename}`]);
+                      console.log(uploadBuffers);
+                      sftp.mkdir(`${res.destinationFolder}`,()=>{});
+                      console.log('create stream');
+                      var writeStream = await sftp.createWriteStream(`${res.destinationFolder}/${res.filename}`,{
+                        start:res.start,
+                        flags: 'w', // w - write and a - append
+                        encoding: null, // use null for binary files
+                        mode: 0o666, // mode to use for created file (rwx)
+                      });
+                      console.log('write to stream');
+                      await writeStream.write(uploadBuffers[`${res.destinationFolder}/${res.filename}`],()=>{});
+                      uploadBuffers[`${res.destinationFolder}/${res.filename}`] = undefined;
+                      socket.emit('data', `\r\nFile ${res.destinationFolder}/${res.filename} has been successfully uploaded.\r\n`);
+                  }            
+                }catch(sub_err2){
+                  console.log(sub_err2);
+                }
+              })();
+              
             });
             socket.on('file-download', (res) => {
               try{

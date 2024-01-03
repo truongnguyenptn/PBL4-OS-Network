@@ -49,6 +49,11 @@ window.addEventListener('load', function() {
   const chkOtherWrite = document.getElementById('chkOtherWrite');
   const chkOtherExecute = document.getElementById('chkOtherExecute');
 
+  const deleteModal = document.getElementById('delete-modal');
+  const txtDeletePath = document.getElementById('txtDeletePath');
+  const btnDeleteModalClose = document.getElementById('btnDeleteModalClose');
+  const btnDelete = document.getElementById('btnDelete');
+
   const btnUploadModal = document.getElementById('btnUploadModal');
   const btnUploadModalClose = document.getElementById('btnUploadModalClose');
   const uploadModal = document.getElementById('upload-modal');
@@ -139,7 +144,7 @@ window.addEventListener('load', function() {
                       <div id = "edit${i}" onclick = "openEditModal('${res.path}/${res.list[i].filename}','${permission}')">Edit</div>
                       ${!isDirectory ? `<div id = "download${i}" onclick = "openDownloadModal('${res.path}','${res.list[i].filename}')">Download</div>` 
                       : `<div id = "changePath${i}" onclick = "changeExplorerPath('${res.path}/${res.list[i].filename}')">Open</div>`}
-                      <div id = "delete${i}">Delete</div>
+                      <div id = "delete${i}" onclick = "openDeleteModal('${res.path}/${res.list[i].filename}')">Delete</div>
                     </td>
                   </tr>
                 
@@ -241,6 +246,18 @@ window.addEventListener('load', function() {
       });
     }
 
+    btnDeleteModalClose.onclick = () => {
+      deleteModal.style.display = 'none';
+    }
+    btnDelete.onclick = () => {
+      socket.emit('delete',{
+        path:txtDeletePath.value
+      });
+      deleteModal.style.display = 'none';
+      socket.emit("get-directories-list",{
+        path:txtExplorerPath.value,
+      });
+    } 
 
     btnUploadModal.onclick = () => {
       uploadModal.style.display = 'block';

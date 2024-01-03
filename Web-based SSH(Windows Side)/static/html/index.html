@@ -95,6 +95,12 @@
             chkOtherExecute.checked = permission[9] == "x";
             editModal.style.display = "block";
           }
+          function openDeleteModal(path){
+            var txtDeletePath = document.getElementById('txtDeletePath');
+            var deleteModal = document.getElementById('delete-modal');
+            txtDeletePath.value = path;
+            deleteModal.style.display = 'block';
+          }
         </script>
       </div>
       
@@ -102,9 +108,26 @@
         <div id="terminal-container">
           <input type = "button" id = "btnCustomizeModal" value = "Customize"></input>
         </div>
-        <div>Note: Explorer work on SFTP and Terminal work on SSH shell</div>
+        <div>Note: Explorer work on SFTP and Terminal work on SSH shell, so they work independently.</div>
       </div>
       
+    </div>
+
+    <div id="delete-modal" class="modal" display = "none">
+      <form class="modal-content animate">
+        <div class="imgcontainer">
+          <p style = "font-size: 20"><b>Delete</b></p>
+          <span class="close" id = "btnDeleteModalClose">&times;</span>
+        </div>
+        <div class="container">
+          <label>Are you sure to the File/Folder on below path?</label>
+          <input type = "text" id = "txtDeletePath" placeholder="Enter delete path."></input>
+          <br>
+        </div>
+        <div class="container" style="background-color:#f1f1f1;">
+          <button type = "button" id = "btnDelete">Delete</button>
+        </div>
+      </form>
     </div>
 
     <div id="edit-modal" class="modal" display = "none">

@@ -85,7 +85,7 @@ async function getChangePasswordSession(sessionKey){
 
 
 
-async function getChangePasswordSession(sessionKey){
+async function getLoginSession(sessionKey){
 	var loginSessionType = await getLoginSessionType();
 	return await Session.findOne({
 		where: {
@@ -98,5 +98,11 @@ async function getChangePasswordSession(sessionKey){
 		}
 	});
 }
+
+// (async () => {
+// console.log(await getSession('du2DRqNUinn6k93Os75yshFd9bvGXclJga9OrhLuhQAVGZKQSfkxx0ulzxGOp4tDypW0eQdhmxWUfQGVHm3CRhi2xkw67fIOWq3OE3PF9hO70g9JZVog5Vl2cKWAdZgzyjjur7QGFgsvJ6dLD6T51ng0N3KqM5jrWhSi0I3LDro66cSJ8fFRYNZDWXTyrp8qMQLYyN79sdx9NLh003e8bfo2Fq0HluW1FxhuDMUlK9B7HUH5SUw3C8fJa7pnUYt6'));
+// })();
+
+
 
 module.exports = { createChangePasswordSession,createLoginSession,getSession,getChangePasswordSession,generateRandomString }
